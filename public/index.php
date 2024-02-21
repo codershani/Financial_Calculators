@@ -45,10 +45,8 @@ $app->route->group('/admin', function ($router) {
         $router->group('/edit', function ($router) { 
             $router->get('/{id:\d+}', [ToolController::class, 'update']);
             $router->post('/{id:\d+}', [ToolController::class, 'update']);
-            $router->get('/{id:\d+}/{action}', [ToolController::class, 'update']);
-            $router->post('/{id:\d+}/{action}', [ToolController::class, 'update']);
+            $router->post('/{id:\d+}/{status}', [ToolController::class, 'update']);
         });
-
 
         $router->group('/delete', function ($router) {
             $router->get('/{id:\d+}', [ToolController::class, 'delete']);

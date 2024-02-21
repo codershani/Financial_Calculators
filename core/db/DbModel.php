@@ -83,8 +83,12 @@ abstract class DbModel extends Model
 
         $statement = self::prepare("UPDATE $tableName SET " . implode(', ', $params) . " WHERE $sql");
 
-        foreach ($data as $attribute) {
-            $statement->bindValue(":$attribute", $this->{$attribute});
+        // foreach ($data as $attribute) {
+        //     $statement->bindValue(":$attribute", $this->{$attribute});
+        // }
+
+        foreach ($data as $key => $value) {
+            $statement->bindValue(":$key", $value);
         }
 
         foreach ($where as $key => $value) {

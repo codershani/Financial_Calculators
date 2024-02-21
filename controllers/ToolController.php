@@ -56,13 +56,13 @@ class ToolController extends Controller
         $id = $request->getRouteParams()['id'];
         $data = $this->tool->getTool(['id' => $id]);
 
-        if($request->getRouteParams()['action'] === 'enable') {
-            $result = $this->tool->updateOne(['id' => $id], ['status' => '1']);
+        if(isset($request->getRouteParams()['status']) && $request->getRouteParams()['status'] === 'enable') {
+            $result = $this->tool->updateOne(['id' => $id], ['status' => 1]);
             if($result) {
                 Application::$app->response->redirect('/admin/tools');
             }
-        } elseif ($request->getRouteParams()['action'] === 'disable') {
-            $result = $this->tool->updateOne(['id' => $id], ['status' => '0']);
+        } elseif (isset($request->getRouteParams()['status']) && $request->getRouteParams()['status'] === 'disable') {
+            $result = $this->tool->updateOne(['id' => $id], ['status' => 0]);
             if($result) {
                 Application::$app->response->redirect('/admin/tools');
             }

@@ -12,6 +12,7 @@ $this->title = 'Tools';
                     <th>#</th>
                     <th>Image</th>
                     <th>Tool Name</th>
+                    <th>Page Title</th>
                     <th>Status</th>
                     <th>Latest Updated</th>
                     <th>Action</th>
@@ -22,6 +23,7 @@ $this->title = 'Tools';
                     <th>#</th>
                     <th>Image</th>
                     <th>Tool Name</th>
+                    <th>Page Title</th>
                     <th>Status</th>
                     <th>Latest Updated</th>
                     <th>Action</th>
@@ -38,6 +40,7 @@ $this->title = 'Tools';
                         </div>
                     </td>
                     <td><?=$tool['tool_name']?></td>
+                    <td><?=$tool['page_title']?></td>
                     <td>
                         <?php if($tool['status'] == 0):?>
                             <p class='bg-gradient-secondary text-white btn-sm text-center'>Disabled</p>
@@ -49,18 +52,18 @@ $this->title = 'Tools';
                     <td>
                         <div class="row">
                             <a href="/admin/tools/edit/<?=$tool['id']?>/enable">
-                                <button class="btn btn-success btn-sm btn-circle m-1"><i class="fas fa-check"></i></button>
+                                <button class="btn btn-success btn-sm m-1 my-2"><i class="fas fa-check"></i></button>
                             </a>
                             <a href="/admin/tools/edit/<?=$tool['id']?>/disable">
-                                <button class="btn btn-warning btn-sm btn-circle m-1"><i class="fas fa-ban"></i></button>
+                                <button class="btn btn-warning btn-sm m-1 my-2"><i class="fas fa-ban"></i></button>
                             </a>
                         </div>
                         <div class="row">
-                            <a href="/admin/tools/edit/<?=$tool['id']?>">
-                                <button class="btn btn-primary btn-sm btn-circle m-1"><i class="fas fa-edit"></i></button>
-                            </a>
-                            <a href="/admin/tools/delete/<?=$tool['id']?>">
-                                <button class="btn btn-danger btn-sm btn-circle m-1"><i class="fas fa-trash"></i></button>
+                            <a href="/admin/tools/edit/<?=$tool['id']?>" class="btn btn-primary btn-sm btn-icon-split m-1">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span class="text">Edit</span>
                             </a>
                         </div>
                     </td>
