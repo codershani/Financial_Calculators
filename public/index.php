@@ -41,6 +41,8 @@ $app->route->group('/admin', function ($router) {
 
     $router->group('/tools', function ($router) {
         $router->get('', [ToolController::class, 'index']);
+        $router->get('/edit/{id:\d+}', [ToolController::class, 'edit']);
+        $router->post('/edit/{id:\d+}', [ToolController::class, 'edit']);
     });
 });
 

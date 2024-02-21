@@ -70,20 +70,30 @@ abstract class DbModel extends Model
         }
 
         $statement->execute();
-        // return $statement->fetchObject(static::class);
     }
 
     public function update($where)
     {
         $tableName = $this->tableName();
         $attributes = $this->attributes();
-        // $attributes = ['title', 'name', 'age'];
         $params = array_map(fn($attr) => "$attr = :$attr", $attributes);
 
-        $id = array_keys($where);
-        $sql = implode("AND ", array_map(fn($attr) => "$attr = :$attr", $id));
+        // Assuming $where is an associative array, e.g., ['id' => 1, 'name' => 'example']
+        $conditions = array_map(fn($attr) => "$attr = :$attr", array_keys($where));
+        $sql = implode(" AND ", $conditions);
+
+
         $statement = self::prepare("UPDATE $tableName SET " . implode(', ', $params) . " WHERE $sql");
 
+        foreach ($attributes as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
         $statement->execute();
+        return true;
     }
 }

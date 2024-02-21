@@ -9,24 +9,42 @@ class Tool extends ToolModel
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
-    public string $file = '';
+    public string $title = '';
+    public string $tool_name = '';
+    public string $slug = '';
+    public ?string $featured_image = '';
+    public ?string $page_title = '';
+    public ?string $short_description = '';
+    public ?string $description = '';
+    public ?string $subtitle = '';
+
     public int $status = self::STATUS_ACTIVE;
     public array $data = [];
     public function rules(): array
     {
         return [
+            'title' => [self::RULE_REQUIRED],
             'tool_name' => [self::RULE_REQUIRED],
             'slug' => [self::RULE_REQUIRED],
+            'featured_image' => [self::RULE_REQUIRED],
+            'short_description' => [self::RULE_REQUIRED],
+            'description' => [self::RULE_REQUIRED],
+            'page_title' => [self::RULE_REQUIRED],
+            'subtitle' => [self::RULE_REQUIRED],
         ];
     }
 
     public function labels(): array
     {
         return [
-            'tool_name' => 'Calculator',
+            'page_title' => 'Page Title',
+            'title' => 'Title',
+            'tool_name' => 'Calculator Name',
             'slug' => 'Slug',
-            'featured_image' => 'Set Featured Image',
-            'icon_image' => 'Set Icon',
+            'featured_image' => 'Featured Image',
+            'subtitle' => 'Subtitle',
+            'short_description' => 'Short Description',
+            'description' => 'Description'
         ];
     }
 
@@ -40,7 +58,7 @@ class Tool extends ToolModel
     }
     public function attributes(): array
     {
-        return ['tool_name', 'slug', 'featured_image', 'icon_image'];
+        return ['page_title', 'title', 'subtitle', 'tool_name', 'slug', 'featured_image', 'short_description', 'description'];
     }
 
     public function save()

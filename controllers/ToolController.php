@@ -15,16 +15,17 @@ class ToolController extends Controller
 
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddlewares(['project', 'upload', 'edit']));
         $this->tool = new Tool();
+        $this->registerMiddleware(new AuthMiddlewares(['index','upload', 'edit']));
     }
 
     public function index()
     {
+        $data = $this->tool->getToolDetails();
+
         $this->setLayout('admin');
-        
         return $this->render('admin/tools', [
-            'model' => $this->tool
+            'data' => $data,
         ]);
     }
 
@@ -38,13 +39,13 @@ class ToolController extends Controller
                 Application::$app->response->redirect('/admin/project');
             }
 
-            return $this->render('admin/projectUpload', [
+            return $this->render('admin/tools', [
                 'model' => $this->tool
             ]); 
         }
         
         $this->setLayout('admin');
-        return $this->render('admin/projectUpload', [
+        return $this->render('admin/tools', [
             'model' => $this->tool
         ]); 
     }
@@ -52,22 +53,26 @@ class ToolController extends Controller
     public function edit(Request $request, Response $response)
     {
 
+        $id = $request->getRouteParams()['id'];
+        $data = $this->tool->getTool(['id' => $id]);
+
         if($request->isPost()) {
             $this->tool->loadData($request->getBody());
 
-            if($this->tool->validate() && $this->tool->update(['id' => '11'])) {
-                Application::$app->session->setFlash('success', 'Video Updated');
-                Application::$app->response->redirect('/admin/project');
+            if($this->tool->validate() && $this->tool->update(['id' => $id])) {
+                Application::$app->session->setFlash('success', $data->tool_name .' Updated');
+                Application::$app->response->redirect('/admin/tools');
             }
 
-            return $this->render('admin/projectUpload', [
-                'model' => $this->tool
+            $this->setLayout('admin');
+            return $this->render('admin/edit-tool', [
+                'data' => $data
             ]);
         }
 
         $this->setLayout('admin');
-        return $this->render('admin/projectUpload', [
-            'model' => $this->tool
+        return $this->render('admin/edit-tool', [
+            'data' => $data
         ]); 
     }
 }

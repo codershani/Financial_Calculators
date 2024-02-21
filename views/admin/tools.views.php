@@ -5,13 +5,13 @@
 $this->title = 'Tools';
 
 ?>
-    <div class="table-responsive table-rounded">
+    <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Icon</th>
+                    <th>#</th>
+                    <th>Image</th>
                     <th>Tool Name</th>
-                    <th>Position</th>
                     <th>Status</th>
                     <th>Latest Updated</th>
                     <th>Action</th>
@@ -19,39 +19,53 @@ $this->title = 'Tools';
             </thead>
             <tfoot>
                 <tr>
-                    <th>Icon</th>
+                    <th>#</th>
+                    <th>Image</th>
                     <th>Tool Name</th>
-                    <th>Position</th>
                     <th>Status</th>
                     <th>Latest Updated</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
             <tbody>
+
+            <?php foreach($data as $key => $tool):?>
                 <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
+                    <td><?=++$key?></td>
+                    <td>
+                        <div class="">
+                            <img src="<?=SITE_ASSETS_PATH?>/img/undraw_profile_1.svg" alt="">
+                        </div>
+                    </td>
+                    <td><?=$tool['tool_name']?></td>
+                    <td>
+                        <?php if($tool['status'] == 0):?>
+                            <p class='bg-gradient-secondary text-white btn-sm text-center'>Disabled</p>
+                            <?php else: ?>
+                                <p class='bg-gradient-success text-white btn-sm text-center'>Enabled</p>
+                        <?php endif; ?>
+                    </td>
+                    <td><?=$tool['updated_at']?></td>
+                    <td>
+                        <div class="row">
+                            <a href="">
+                                <button class="btn btn-success btn-sm btn-circle m-1"><i class="fas fa-check"></i></button>
+                            </a>
+                            <a href="">
+                                <button class="btn btn-warning btn-sm btn-circle m-1"><i class="fas fa-ban"></i></button>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <a href="/admin/tools/edit/<?=$tool['id']?>">
+                                <button class="btn btn-primary btn-sm btn-circle m-1"><i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href="">
+                                <button class="btn btn-danger btn-sm btn-circle m-1"><i class="fas fa-trash"></i></button>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
-                <tr>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>63</td>
-                    <td>2011/07/25</td>
-                    <td>$170,750</td>
-                </tr>
-                <tr>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>San Francisco</td>
-                    <td>66</td>
-                    <td>2009/01/12</td>
-                    <td>$86,000</td>
-                </tr>
+            <?php endforeach;?>
             </tbody>
         </table>
     </div>
