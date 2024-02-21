@@ -6,78 +6,68 @@ use app\core\Controller;
 use app\core\middlewares\AuthMiddlewares;
 use app\core\Request;
 use app\core\Response;
-use app\models\Project;
+use app\models\Tool;
 
-class ProjectController extends Controller
+class ToolController extends Controller
 {
+
+    private Tool $tool;
+
     public function __construct()
     {
         $this->registerMiddleware(new AuthMiddlewares(['project', 'upload', 'edit']));
+        $this->tool = new Tool();
     }
 
     public function index()
     {
-        $project = new Project();
-
-        $this->setLayout('main');
-        
-        return $this->render('frontend/project', [
-            'model' => $project
-        ]);
-    }
-
-    public function project()
-    {
-        $project = new Project();
-        
         $this->setLayout('admin');
-        return $this->render('admin/project', [
-            'model' => $project
-        ]); 
+        
+        return $this->render('admin/tools', [
+            'model' => $this->tool
+        ]);
     }
 
     public function upload(Request $request, Response $response)
     {
-        $project = new Project();
         if($request->isPost()) {
-            $project->loadData($request->getBody());
+            $this->tool->loadData($request->getBody());
 
-            if($project->validate() && $project->save()) {
+            if($this->tool->validate() && $this->tool->save()) {
                 Application::$app->session->setFlash('success', 'Video Uploaded');
                 Application::$app->response->redirect('/admin/project');
             }
 
             return $this->render('admin/projectUpload', [
-                'model' => $project
+                'model' => $this->tool
             ]); 
         }
         
         $this->setLayout('admin');
         return $this->render('admin/projectUpload', [
-            'model' => $project
+            'model' => $this->tool
         ]); 
     }
 
     public function edit(Request $request, Response $response)
     {
 
-        $project = new Project();
         if($request->isPost()) {
-            $project->loadData($request->getBody());
+            $this->tool->loadData($request->getBody());
 
-            if($project->validate() && $project->update(['id' => '11'])) {
+            if($this->tool->validate() && $this->tool->update(['id' => '11'])) {
                 Application::$app->session->setFlash('success', 'Video Updated');
                 Application::$app->response->redirect('/admin/project');
             }
 
             return $this->render('admin/projectUpload', [
-                'model' => $project
+                'model' => $this->tool
             ]);
         }
 
         $this->setLayout('admin');
         return $this->render('admin/projectUpload', [
-            'model' => $project
+            'model' => $this->tool
         ]); 
     }
 }

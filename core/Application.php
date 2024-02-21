@@ -15,7 +15,7 @@ Class Application
     public string $layout = 'main';
     public string $userClass;
     public static string $ROOT_DIR;
-    public Router $router;
+    public Router $route;
     public Request $request;
     public Response $response;
     public Session $session;
@@ -39,7 +39,7 @@ Class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->session = new Session();
-        $this->router = new Router($this->request,$this->response);
+        $this->route = new Router($this->request,$this->response);
         $this->view = new View();
 
         $this->db = new Database($config['db']);
@@ -100,7 +100,7 @@ Class Application
      */
     public function run() {
         try {
-            echo $this->router->resolve();
+            echo $this->route->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
             echo $this->view->renderView('_error', [

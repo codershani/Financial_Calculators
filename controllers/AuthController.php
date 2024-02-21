@@ -7,7 +7,6 @@ use app\core\middlewares\AuthMiddlewares;
 use app\core\Request;
 use app\core\Response;
 use app\models\LoginForm;
-use app\models\user;
 
 class AuthController extends Controller
 {
@@ -19,7 +18,6 @@ class AuthController extends Controller
 
     public function login(Request $request, Response $response)
     {
-
         $loginForm = new LoginForm();
         if($request->isPost()) {
             $loginForm->loadData($request->getBody());

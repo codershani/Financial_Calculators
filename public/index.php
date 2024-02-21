@@ -2,6 +2,7 @@
 
 use app\controllers\AuthController;
 use app\controllers\SiteController;
+use app\controllers\ToolController;
 use app\core\Application;
 use app\models\User;
 
@@ -22,20 +23,25 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->get('/', [SiteController::class, 'home']);
-$app->router->get('/{slug}', [SiteController::class, 'index']);
+$app->route->group('/', function ($router) {
+    $router->get('', [SiteController::class, 'home']);
+    $router->get('{slug}', [SiteController::class, 'index']);
+});
 
-$app->router->get('/login', [AuthController::class, 'login']);
-$app->router->get('/login/{id}/', [AuthController::class, 'login']);
-$app->router->post('/login', [AuthController::class, 'login']);
+$app->route->group('/login', function ($router) {
+    $router->get('', [AuthController::class, 'login']);
+    $router->post('', [AuthController::class, 'login']);
+});
 
-$app->router->get('/logout', [AuthController::class, 'logout']);
-$app->router->get('/admin', [AuthController::class, 'admin']);
-$app->router->get('/admin/{id:\d+}/{username}', [AuthController::class, 'admin']);
 
-// $app->router->get('/project', [ProjectController::class, 'index']);
-// $app->router->get('/admin/project', [ProjectController::class, 'project']);
-// $app->router->get('/admin/upload', [ProjectController::class, 'upload']);
-// $app->router->post('/admin/upload', [ProjectController::class, 'upload']);
-// $app->router->get('/admin/project/edit', [ProjectController::class, 'edit']);
+$app->route->get('/logout', [AuthController::class, 'logout']);
+
+$app->route->group('/admin', function ($router) {
+    $router->get('', [AuthController::class, 'admin']);
+
+    $router->group('/tools', function ($router) {
+        $router->get('', [ToolController::class, 'index']);
+    });
+});
+
 $app->run();

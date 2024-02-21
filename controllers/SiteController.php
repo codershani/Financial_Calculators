@@ -32,6 +32,7 @@ class SiteController extends Controller
         echo '<pre>';
         var_dump($tool);
         echo '</pre>';
+        exit;
 
     } 
 

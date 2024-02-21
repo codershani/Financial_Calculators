@@ -15,6 +15,7 @@ class Router
     public Request $request;
     public Response $response;
     protected array $routeMap = [];
+    protected $currentGroup = '';
 
     /**
      * Summary of __construct
@@ -27,27 +28,57 @@ class Router
         $this->response = $response;
     }
 
-    /**
-     * Summary of get
-     * @param mixed $path
-     * @param mixed $callback
-     * @return void
-     */
-    public function get($path, $callback) 
-    {
+
+    public function group($prefix, $callback) {
+        $parentGroup = $this->currentGroup;
+        $this->currentGroup .= '/' . trim($prefix, '/');
+
+        $callback($this);
+
+        $this->currentGroup = $parentGroup;
+    }
+
+    // /**
+    //  * Summary of get
+    //  * @param mixed $path
+    //  * @param mixed $callback
+    //  * @return void
+    //  */
+    // public function get($path, $callback) 
+    // {
+    //     $this->routeMap['get'][$path] = $callback;
+    // }
+
+    // /**
+    //  * Summary of post
+    //  * @param mixed $path
+    //  * @param mixed $callback
+    //  * @return void
+    //  */
+    // public function post($path, $callback) 
+    // {
+    //     $this->routeMap['post'][$path] = $callback;
+    // }
+
+    public function get($path, $callback) {
+        $path = $this->currentGroup ? $this->currentGroup . $path : $path;
         $this->routeMap['get'][$path] = $callback;
     }
 
-    /**
-     * Summary of post
-     * @param mixed $path
-     * @param mixed $callback
-     * @return void
-     */
-    public function post($path, $callback) 
-    {
+    public function post($path, $callback) {
+        $path = $this->currentGroup ? $this->currentGroup . $path : $path;
         $this->routeMap['post'][$path] = $callback;
     }
+
+    // public function get($path, $callback) {
+    //     $path = $this->currentGroup . '/' . trim($path, '/');
+    //     $this->routeMap['get'][$path] = $callback;
+    // }
+
+    // public function post($path, $callback) {
+    //     $path = $this->currentGroup . '/' . trim($path, '/');
+    //     $this->routeMap['post'][$path] = $callback;
+    // }
 
     public function getRouteMap($method) {
         return $this->routeMap[$method] ?? [];

@@ -44,7 +44,7 @@ class View
             $layout = Application::$app->controller->layout;
         }
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/layouts/$layout.php";
+        include_once Application::$ROOT_DIR . "/views/layouts/$layout.views.php";
         return ob_get_clean();
     }
 
@@ -61,7 +61,7 @@ class View
         }
 
         ob_start();
-        include_once Application::$ROOT_DIR . "/views/$view.php";
+        include_once Application::$ROOT_DIR . "/views/$view.views.php";
         return ob_get_clean();
     }
 }
