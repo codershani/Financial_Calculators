@@ -33,8 +33,8 @@ $this->title = 'Tools';
                 <tr>
                     <td><?=++$key?></td>
                     <td>
-                        <div class="">
-                            <img src="<?=SITE_ASSETS_PATH?>/img/undraw_profile_1.svg" alt="">
+                        <div class="tools-view-img">
+                            <img src="<?=SITE_PATH.$tool['featured_image']?>" alt="">
                         </div>
                     </td>
                     <td><?=$tool['tool_name']?></td>
@@ -48,10 +48,10 @@ $this->title = 'Tools';
                     <td><?=$tool['updated_at']?></td>
                     <td>
                         <div class="row">
-                            <a href="">
+                            <a href="/admin/tools/edit/<?=$tool['id']?>/enable">
                                 <button class="btn btn-success btn-sm btn-circle m-1"><i class="fas fa-check"></i></button>
                             </a>
-                            <a href="">
+                            <a href="/admin/tools/edit/<?=$tool['id']?>/disable">
                                 <button class="btn btn-warning btn-sm btn-circle m-1"><i class="fas fa-ban"></i></button>
                             </a>
                         </div>
@@ -59,7 +59,7 @@ $this->title = 'Tools';
                             <a href="/admin/tools/edit/<?=$tool['id']?>">
                                 <button class="btn btn-primary btn-sm btn-circle m-1"><i class="fas fa-edit"></i></button>
                             </a>
-                            <a href="">
+                            <a href="/admin/tools/delete/<?=$tool['id']?>">
                                 <button class="btn btn-danger btn-sm btn-circle m-1"><i class="fas fa-trash"></i></button>
                             </a>
                         </div>

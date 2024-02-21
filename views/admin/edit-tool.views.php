@@ -26,7 +26,8 @@ $this->title = 'Edit '. $data->tool_name;
                                 <?=$form->field($data, 'slug')?>
                                 <?=$form->field($data, 'short_description')?>
                                 <?=$form->field($data, 'featured_image')->filesField()?>
-                                <?=$form->field($data, 'description')?>
+                                <!-- CKEditor textarea -->
+                                <textarea id="editor1" name="description"><?=$data->description?></textarea>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">Update Tool</button>
                             <?php Form::end(); ?>
                         </div>
@@ -36,3 +37,33 @@ $this->title = 'Edit '. $data->tool_name;
         </div>
 
     </div>
+
+    <!-- CKEditor5 File -->
+    <script src="<?=SITE_ASSETS_PATH?>/vendor/ckeditor5/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor1' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+
+            // Make sure to handle form submission with JavaScript
+            document.querySelector('form').addEventListener('submit', function (event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Get CKEditor content
+                var editor = ClassicEditor.instances.editor1;
+                var descriptionContent = editor.getData();
+
+                // Add a hidden input to the form to send CKEditor content
+                var hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'description_content';
+                hiddenInput.value = descriptionContent;
+                this.appendChild(hiddenInput);
+
+                // Now, submit the form
+                this.submit();
+            });
+    </script>

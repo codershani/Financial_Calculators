@@ -72,6 +72,29 @@ abstract class DbModel extends Model
         $statement->execute();
     }
 
+    public function updateOne($where, $data)
+    {
+        $tableName = $this->tableName();
+        $params = array_map(fn($attr) => "$attr = :$attr", array_keys($data));
+        
+        // Assuming $where is an associative array, e.g., ['id' => 1, 'name' => 'example']
+        $conditions = array_map(fn($attr) => "$attr = :$attr", array_keys($where));
+        $sql = implode(" AND ", $conditions);
+
+        $statement = self::prepare("UPDATE $tableName SET " . implode(', ', $params) . " WHERE $sql");
+
+        foreach ($data as $attribute) {
+            $statement->bindValue(":$attribute", $this->{$attribute});
+        }
+
+        foreach ($where as $key => $value) {
+            $statement->bindValue(":$key", $value);
+        }
+
+        $statement->execute();
+        return true;
+    }
+
     public function update($where)
     {
         $tableName = $this->tableName();

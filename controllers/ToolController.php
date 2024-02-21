@@ -16,7 +16,7 @@ class ToolController extends Controller
     public function __construct()
     {
         $this->tool = new Tool();
-        $this->registerMiddleware(new AuthMiddlewares(['index','upload', 'edit']));
+        $this->registerMiddleware(new AuthMiddlewares(['index','upload', 'update', 'delete']));
     }
 
     public function index()
@@ -50,14 +50,46 @@ class ToolController extends Controller
         ]); 
     }
 
-    public function edit(Request $request, Response $response)
+    public function update(Request $request, Response $response)
     {
 
         $id = $request->getRouteParams()['id'];
         $data = $this->tool->getTool(['id' => $id]);
 
+        if($request->getRouteParams()['action'] === 'enable') {
+            $result = $this->tool->updateOne(['id' => $id], ['status' => '1']);
+            if($result) {
+                Application::$app->response->redirect('/admin/tools');
+            }
+        } elseif ($request->getRouteParams()['action'] === 'disable') {
+            $result = $this->tool->updateOne(['id' => $id], ['status' => '0']);
+            if($result) {
+                Application::$app->response->redirect('/admin/tools');
+            }
+        }
+
         if($request->isPost()) {
-            $this->tool->loadData($request->getBody());
+
+            $folder = "uploads/";
+            if(!file_exists($folder))
+            {
+                mkdir($folder,0777,true);
+            }
+
+            if(!empty($_FILES['featured_image'])) {   
+                $destination = $folder . date("Y-m-d-h-i-s") . $_FILES['featured_image']['name'];
+                move_uploaded_file($_FILES['featured_image']['tmp_name'], $destination);
+                $_POST['featured_image'] = $destination;
+            }
+            
+            // Handle CKEditor data
+            $data->description = $request->getBody()['description'];
+
+            // Additional fields
+            $_POST['updated_at'] = date("Y-m-d-h-i-s");
+
+            // Load data and validate
+            $this->tool->loadData($_POST);
 
             if($this->tool->validate() && $this->tool->update(['id' => $id])) {
                 Application::$app->session->setFlash('success', $data->tool_name .' Updated');
@@ -74,5 +106,10 @@ class ToolController extends Controller
         return $this->render('admin/edit-tool', [
             'data' => $data
         ]); 
+    }
+
+    public function delete(Request $request, Response $response) 
+    {
+
     }
 }
