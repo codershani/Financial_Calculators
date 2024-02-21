@@ -1,0 +1,17 @@
+{
+    "name": "ezycodes/navi-portfolio",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "codershani",
+            "email": "codershani13@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
