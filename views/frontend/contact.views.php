@@ -6,7 +6,7 @@ use app\core\form\TextareaField;
 /** @var \app\core\View $this */
 /** @var \app\models\ContactForm $model */
 
-$this->title = 'Contact Us';
+$this->page_title = 'Contact Us';
 
 ?>
     

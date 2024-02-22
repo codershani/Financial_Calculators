@@ -1,6 +1,7 @@
 <?php 
 
 namespace app\models;
+use app\core\Application;
 use app\core\UserModel;
 
 /**
@@ -15,8 +16,6 @@ class User extends UserModel
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
-
-
     public string $firstname = '';
     public string $lastname = '';
     public string $email = '';
@@ -74,6 +73,7 @@ class User extends UserModel
 
     public function getDisplayName(): string
     {
-        return $this->firstname . ' ' . $this->lastname;
+        $this->username = Application::$app->session->get('username');
+        return '<strong>' . $this->username . '</strong>';
     }
 }

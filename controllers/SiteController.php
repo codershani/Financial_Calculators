@@ -29,10 +29,8 @@ class SiteController extends Controller
 
         $tool = $this->tools->getTool(['slug' => $slug]);
 
-        echo '<pre>';
-        var_dump($tool);
-        echo '</pre>';
-        exit;
+        $this->setLayout('main');
+        return $this->render('frontend/single-tool', [ 'tool' => $tool]);
 
     } 
 

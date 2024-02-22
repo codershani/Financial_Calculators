@@ -3,13 +3,13 @@
 namespace app\core;
 use app\core\exception\NotFoundException;
 
-  /**
-   * Summary of Router
-   * @author CoderShani
-   * @package app\core
-   * @copyright (c) 2023
-   */
 
+/**
+ * Summary of Router
+ * @author CoderShani
+ * @package app\core
+ * @copyright (c) 2024
+ */
 class Router
 {
     public Request $request;
@@ -28,7 +28,12 @@ class Router
         $this->response = $response;
     }
 
-
+    /**
+     * Summary of group
+     * @param mixed $prefix
+     * @param mixed $callback
+     * @return void
+     */
     public function group($prefix, $callback) {
         $parentGroup = $this->currentGroup;
         $this->currentGroup .= '/' . trim($prefix, '/');
@@ -38,28 +43,12 @@ class Router
         $this->currentGroup = $parentGroup;
     }
 
-    // /**
-    //  * Summary of get
-    //  * @param mixed $path
-    //  * @param mixed $callback
-    //  * @return void
-    //  */
-    // public function get($path, $callback) 
-    // {
-    //     $this->routeMap['get'][$path] = $callback;
-    // }
-
-    // /**
-    //  * Summary of post
-    //  * @param mixed $path
-    //  * @param mixed $callback
-    //  * @return void
-    //  */
-    // public function post($path, $callback) 
-    // {
-    //     $this->routeMap['post'][$path] = $callback;
-    // }
-
+    /**
+     * Summary of get
+     * @param mixed $path
+     * @param mixed $callback
+     * @return void
+     */
     public function get($path, $callback) {
         $path = $this->currentGroup ? $this->currentGroup . $path : $path;
         $this->routeMap['get'][$path] = $callback;
@@ -70,21 +59,15 @@ class Router
         $this->routeMap['post'][$path] = $callback;
     }
 
-    // public function get($path, $callback) {
-    //     $path = $this->currentGroup . '/' . trim($path, '/');
-    //     $this->routeMap['get'][$path] = $callback;
-    // }
-
-    // public function post($path, $callback) {
-    //     $path = $this->currentGroup . '/' . trim($path, '/');
-    //     $this->routeMap['post'][$path] = $callback;
-    // }
-
     public function getRouteMap($method) {
         return $this->routeMap[$method] ?? [];
         ;
     }
 
+    /**
+     * Summary of getCallback
+     * @return mixed
+     */
     public function getCallback() {
         $method = $this->request->getMethod();
         $url = $this->request->getUrl();
@@ -172,6 +155,5 @@ class Router
         }
         return call_user_func($callback, $this->request, $this->response);
     }
-
     
 }

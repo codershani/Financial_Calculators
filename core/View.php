@@ -4,7 +4,10 @@ namespace app\core;
 
 class View
 {
+    public string $page_title = '';
     public string $title = '';
+    public string $description = '';
+    public string $keywords = '';
 
     /**
      * Summary of renderView

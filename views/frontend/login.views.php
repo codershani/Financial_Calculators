@@ -3,7 +3,7 @@
 
 /** @var \app\core\View $this */
 
-$this->title = 'Login';
+$this->page_title = 'Login';
 
 ?>
 

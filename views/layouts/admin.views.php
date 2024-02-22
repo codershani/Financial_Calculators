@@ -330,7 +330,7 @@ use app\core\Application;
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo Application::$app->user->getDisplayName() ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="<?=SITE_ASSETS_PATH?>/img/undraw_profile.svg">
                             </a>
@@ -365,20 +365,22 @@ use app\core\Application;
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <p class="mb-3 p-2 text-gray-900 bg-gray-200"><a href="/admin">Admin</a> / <?=$this->title?></p>
+                    <!-- Page Heading -->
+                    <p class="mb-3 p-2 text-gray-900 bg-gray-200"><a href="/admin">Admin</a> / <?=$this->title?></p>
 
-                <?php if (Application::$app->session->getFlash('success')): ?>
-                    <div class="alert alert-success">
-                        <?php echo Application::$app->session->getFlash('success'); ?>
-                    </div>
-                <?php endif; ?>
-                {{content}}
+                    <?php if (Application::$app->session->getFlash('success')): ?>
+                        <div class="alert alert-success">
+                            <?php echo Application::$app->session->getFlash('success'); ?>
+                        </div>
+                    <?php endif; ?>
+                    {{content}}
 
                 </div>
                 <!-- /.container-fluid -->
+
             </div>
             <!-- End of Main Content -->
+            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">

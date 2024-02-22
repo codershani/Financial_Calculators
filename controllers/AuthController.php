@@ -22,10 +22,12 @@ class AuthController extends Controller
         if($request->isPost()) {
             $loginForm->loadData($request->getBody());
             if($loginForm->validate() && $loginForm->login()) {
+                Application::$app->session->setFlash('success', ' Successfully Logged In');
                 $response->redirect('/admin');
                 return;
             }
         }
+
         $this->setLayout('auth');
         return $this->render('frontend/login', [
             'model' => $loginForm
@@ -42,7 +44,7 @@ class AuthController extends Controller
     public function admin()
     {
         $this->setLayout('admin');
-        return $this->render('admin/admin');
+        return $this->render('admin/dashboard');
     }
 
 }
