@@ -80,13 +80,10 @@ class ToolController extends Controller
                 $destination = $folder . date("Y-m-d-h-i-s") . $_FILES['featured_image']['name'];
                 move_uploaded_file($_FILES['featured_image']['tmp_name'], $destination);
                 $_POST['featured_image'] = $destination;
-            }
-            
+            } 
+
             // Handle CKEditor data
             $data->description = $request->getBody()['description'];
-
-            // Additional fields
-            $_POST['updated_at'] = date("Y-m-d-h-i-s");
 
             // Load data and validate
             $this->tool->loadData($_POST);
@@ -106,10 +103,5 @@ class ToolController extends Controller
         return $this->render('admin/edit-tool', [
             'data' => $data
         ]); 
-    }
-
-    public function delete(Request $request, Response $response) 
-    {
-
     }
 }

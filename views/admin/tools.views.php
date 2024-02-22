@@ -13,8 +13,8 @@ $this->title = 'Tools';
                     <th>Image</th>
                     <th>Tool Name</th>
                     <th>Page Title</th>
+                    <th>Sub Title</th>
                     <th>Status</th>
-                    <th>Latest Updated</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -24,8 +24,8 @@ $this->title = 'Tools';
                     <th>Image</th>
                     <th>Tool Name</th>
                     <th>Page Title</th>
+                    <th>Sub Title</th>
                     <th>Status</th>
-                    <th>Latest Updated</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -41,6 +41,7 @@ $this->title = 'Tools';
                     </td>
                     <td><?=$tool['tool_name']?></td>
                     <td><?=$tool['page_title']?></td>
+                    <td><?=$tool['subtitle']?></td>
                     <td>
                         <?php if($tool['status'] == 0):?>
                             <p class='bg-gradient-secondary text-white btn-sm text-center'>Disabled</p>
@@ -48,7 +49,6 @@ $this->title = 'Tools';
                                 <p class='bg-gradient-success text-white btn-sm text-center'>Enabled</p>
                         <?php endif; ?>
                     </td>
-                    <td><?=$tool['updated_at']?></td>
                     <td>
                         <div class="row">
                             <a href="/admin/tools/edit/<?=$tool['id']?>/enable">

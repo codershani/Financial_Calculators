@@ -19,12 +19,13 @@ $this->title = 'Edit '. $data->tool_name;
                                 <h1 class="h4 text-gray-900 mb-4">Edit <strong><?=$data->tool_name?></strong></h1>
                             </div>
                             <?php $form = Form::begin('', "post"); ?>
-                                <?=$form->field($data, 'page_title')?>
-                                <?=$form->field($data, 'title')?>
-                                <?=$form->field($data, 'subtitle')?>
                                 <?=$form->field($data, 'tool_name')?>
                                 <?=$form->field($data, 'slug')?>
-                                <?=$form->field($data, 'short_description')?>
+                                <?=$form->field($data, 'page_title')?>
+                                <?=$form->field($data, 'keywords')?>
+                                <?=$form->field($data, 'meta_description')?>
+                                <?=$form->field($data, 'title')?>
+                                <?=$form->field($data, 'subtitle')?>
                                 <?=$form->field($data, 'featured_image')->filesField()?>
                                 <!-- CKEditor textarea -->
                                 <textarea id="editor1" name="description"><?=$data->description?></textarea>
@@ -39,7 +40,7 @@ $this->title = 'Edit '. $data->tool_name;
     </div>
 
     <!-- CKEditor5 File -->
-    <script src="<?=SITE_ASSETS_PATH?>/vendor/ckeditor5/ckeditor.js"></script>
+    <script src="<?=SITE_ASSETS_PATH?>/extras/ckeditor5/ckeditor.js"></script>
     <script>
         ClassicEditor
             .create( document.querySelector( '#editor1' ) )

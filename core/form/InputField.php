@@ -16,6 +16,7 @@ class InputField extends BaseField
     public const TYPE_NUMBER = 'number';
     public const TYPE_EMAIL = 'email';
     public const TYPE_FILES = 'file';
+    public const TYPE_HIDDEN = 'hidden';
     public string $type;
     
     /**
@@ -48,6 +49,12 @@ class InputField extends BaseField
         return $this;
     }
 
+    public function hiddenField() 
+    {
+        $this->type = self::TYPE_HIDDEN;
+        return $this;
+    }
+
     public function renderInput(): string
     {
         return sprintf('
@@ -57,7 +64,7 @@ class InputField extends BaseField
                     $this->attribute,
                     $this->model->{$this->attribute},
                     $this->attribute,
-                    $this->type,
+                    ucwords(str_replace('_', ' ', $this->attribute)),
                     $this->model->hasError($this->attribute) ? ' is-invalid' : '',
                 );
     }

@@ -14,7 +14,8 @@ class Tool extends ToolModel
     public string $slug = '';
     public ?string $featured_image = '';
     public ?string $page_title = '';
-    public ?string $short_description = '';
+    public ?string $meta_description = '';
+    public ?string $keywords = '';
     public ?string $description = '';
     public ?string $subtitle = '';
 
@@ -27,7 +28,8 @@ class Tool extends ToolModel
             'tool_name' => [self::RULE_REQUIRED],
             'slug' => [self::RULE_REQUIRED],
             'featured_image' => [self::RULE_REQUIRED],
-            'short_description' => [self::RULE_REQUIRED],
+            'meta_description' => [self::RULE_REQUIRED],
+            'keywords' => [self::RULE_REQUIRED],
             'description' => [self::RULE_REQUIRED],
             'page_title' => [self::RULE_REQUIRED],
             'subtitle' => [self::RULE_REQUIRED],
@@ -43,7 +45,8 @@ class Tool extends ToolModel
             'slug' => 'Slug',
             'featured_image' => 'Featured Image',
             'subtitle' => 'Subtitle',
-            'short_description' => 'Short Description',
+            'meta_description' => 'Meta Description',
+            'keywords' => 'Keywords',
             'description' => 'Description'
         ];
     }
@@ -58,7 +61,7 @@ class Tool extends ToolModel
     }
     public function attributes(): array
     {
-        return ['page_title', 'title', 'subtitle', 'tool_name', 'slug', 'featured_image', 'short_description', 'description'];
+        return ['page_title', 'title', 'subtitle', 'tool_name', 'slug', 'featured_image', 'meta_description', 'keywords', 'description'];
     }
 
     public function save()
