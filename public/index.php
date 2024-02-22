@@ -26,6 +26,7 @@ $app = new Application(dirname(__DIR__), $config);
 $app->route->group('/', function ($router) {
     $router->get('', [SiteController::class, 'home']);
     $router->get('{slug}', [SiteController::class, 'index']);
+    $router->post('{slug}', [SiteController::class, 'index']);
 });
 
 $app->route->group('/login', function ($router) {

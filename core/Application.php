@@ -103,7 +103,7 @@ Class Application
             echo $this->route->resolve();
         } catch (\Exception $e) {
             $this->response->setStatusCode($e->getCode());
-            echo $this->view->renderView('_error', [
+            echo $this->view->renderView('frontend/_error', [
                 'exception' => $e
             ]);
         }

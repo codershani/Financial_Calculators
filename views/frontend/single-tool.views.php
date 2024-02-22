@@ -18,9 +18,7 @@ $this->title = $tool->title;
         <div>
             <?php include_once('tools/' . $tool->slug . '.views.php'); ?>
         </div>
-        <hr>
-        <!-- Output Container -->
-        <div class="tool-container--content__output"></div>
+        
     </div>
     <!-- Image Container -->
     <div class="tool-container--image">

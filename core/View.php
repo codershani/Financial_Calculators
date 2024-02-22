@@ -20,7 +20,6 @@ class View
         $viewContent = $this->renderOnlyView($view, $params);
         $layoutContent = $this->layoutContent();
         return str_replace('{{content}}', $viewContent, $layoutContent);
-        // include_once Application::$ROOT_DIR . "/views/$view.php";
     }
 
     /**
@@ -31,9 +30,7 @@ class View
     public function renderContent($viewContent) 
     {
         $layoutContent = $this->layoutContent();
-        // $viewContent = $this->renderOnlyView($view);
         return str_replace('{{content}}', $viewContent, $layoutContent);
-        // include_once Application::$ROOT_DIR . "/views/$view.php";
     }
 
     /**

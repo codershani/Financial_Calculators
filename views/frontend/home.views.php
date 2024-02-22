@@ -5,6 +5,7 @@
 $this->page_title = 'Finance Calculators';
 $this->description = 'Finance Calculators';
 $this->keywords = 'Finance Calculators,SIP calculator,gst calculator,emi calculator,PPF calculator';
+$this->title = 'Finance Calculators';
 
 ?>
 
