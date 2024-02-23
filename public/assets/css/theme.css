@@ -109,7 +109,7 @@
     margin: 4rem 0;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1023px) {
     .tool-container {
       flex-direction: column;
     }
@@ -122,4 +122,22 @@
     .tool-container .tool-container--content {
       width: 100%;
     }
+}
+
+.wording {
+    color: #0054d1;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.tool-container--content__output {
+    font-size: 1.125rem !important;
+    background-color: #deeeff !important;
+    border: solid 2px #6fb0f8;
+    padding: 1rem !important;
+    border-radius: 0.5rem !important;
+}
+
+input::placeholder {
+    color: #bdbdbd !important;
 }

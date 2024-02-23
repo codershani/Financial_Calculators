@@ -8,16 +8,50 @@ class SIPCalculator extends Calculator
     public function calculate($inputData)
     {
 
-        // Retrieve input data from the form
-        $amount = $inputData['amount'] ? $inputData['amount'] : 0;
-        $rate = $inputData['rate'] ? $inputData['rate'] : 0;
+        // handle the input data
+        $frequency = $inputData['frequencyOfInvestment'];
+        $investmentAmount = $this->checkNull($this->convertToNumber($inputData['investmentAmount']));
+        $rateOfReturn = $this->checkNull($this->convertToNumber($inputData['rateOfReturn']));
+        $tenureTime = $this->checkNull($this->convertToNumber($inputData['tenureTime']));
+        $corpusValue = 0;
+        $totalEarnings = 0;
+        $depositedAmount = 0;
 
-        // Perform GST calculation
-        $gstAmount = ($amount * $rate) / 100;
-        $totalAmount = $amount + $gstAmount;
+        if($frequency === 'Monthly') {
+  
+            $monthlyInterestRate = ($rateOfReturn / 12) / 100;
+            $numberOfMonths = $tenureTime * 12;
+            $depositedAmount = $investmentAmount * $numberOfMonths;
+    
+            for ($i = 1; $i <= $numberOfMonths; $i++) {
+                $corpusValue = ($corpusValue + $investmentAmount) * (1 + $monthlyInterestRate);
+            }
+    
+        } 
 
-        // Format the result
-        return "GST Amount: $gstAmount, Total Amount (including GST): $totalAmount";
+        if($frequency === 'Yearly') {
+            $annualInterestRate = $rateOfReturn / 100;
+            $depositedAmount = $investmentAmount * $tenureTime;
+    
+            for ($i = 1; $i <= $tenureTime; $i++) {
+                $corpusValue = ($corpusValue + $investmentAmount) * (1 + $annualInterestRate);
+            }
+
+        }
+
+        $corpusValue = round($corpusValue, 2);
+        $totalEarnings = $corpusValue - $depositedAmount;
+
+        $this->result = [
+            'corpusValue' => $this->indianMoneyFormat($corpusValue),
+            'corpusValueText' => $this->convertToIndianNumberText($corpusValue),
+            'totalEarning' => $this->indianMoneyFormat($totalEarnings),
+            'totalEarningText' => $this->convertToIndianNumberText($totalEarnings),
+            'depositedAmount' => $this->indianMoneyFormat($depositedAmount),
+            'depositedAmountText' => $this->convertToIndianNumberText($depositedAmount),
+        ];
+
+        return $this->result;
 
     }
 }

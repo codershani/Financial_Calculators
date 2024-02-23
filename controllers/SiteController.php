@@ -31,27 +31,26 @@ class SiteController extends Controller
     {
         $slug = $request->getRouteParams()['slug'];
         $tool = $this->tools->getTool(['slug' => $slug]);
+        
+        // Convert slug to class name using the mapping
+        $calculatorClassName = $this->getCalculatorClassName($slug);
+        
+        if ($calculatorClassName && class_exists($calculatorClassName)) {
+            $this->calculator = new $calculatorClassName();
 
-        if($request->isPost()) {
-            
-            // Convert slug to class name using the mapping
-            $calculatorClassName = $this->getCalculatorClassName($slug);
-            
-            if ($calculatorClassName && class_exists($calculatorClassName)) {
-                $this->calculator = new $calculatorClassName();
+            if($request->isPost()) {
                 
                 // Perform calculations using the calculator
                 $this->result = $this->calculator->calculate($request->getBody()); // Assuming form data is sent in the request body
                 
-            } else {
-                $this->setLayout('error');
-                return $this->render('frontend/_error', ['exception' => new ClassNotFoundException]);
             }
+            // Render the view with the tool and calculator result
+            $this->setLayout('main');
+            return $this->render('frontend/single-tool', ['tool' => $tool, 'result' => $this->result]);
+        } else {
+            $this->setLayout('error');
+            return $this->render('frontend/_error', ['exception' => new ClassNotFoundException]);
         }
-
-        // Render the view with the tool and calculator result
-        $this->setLayout('main');
-        return $this->render('frontend/single-tool', ['tool' => $tool, 'result' => $this->result]);
     }
 
     private function getCalculatorClassName($slug)

@@ -16,31 +16,25 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/project">Projects</a>
+                    <a class="nav-link" href="/">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact Us</a>
+                    <a class="nav-link" href="/">Contact Us</a>
                 </li>
-            </ul>
 
-            <?php if(Application::isGuest()):?>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">Register</a>
-                </li>
+                <?php if(!Application::isGuest()):?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user"></i> <?php echo Application::$app->user->getDisplayName() ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/admin"><i class="fas fa-tachometer-alt me-2"></i> Admin Dashboard</a></li>
+                            <li><a class="dropdown-item" href="/logout"><i class="fas fa-power-off me-2"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                <?php else: ?>
             </ul>
-            <?php else: ?>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="/logout">Welcome <?php echo Application::$app->user->getDisplayName() ?>, (Logout)</a>
-                </li>
-            </ul>
+            
             <?php endif; ?>
         </div>
     </div>
