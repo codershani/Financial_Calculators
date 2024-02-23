@@ -17,14 +17,6 @@ abstract class Calculator
         return preg_replace('/[^0-9]/', '', $inputData);
     }
 
-    public function formatNumberIndianStyle($number) {
-    
-        // Combine integer and decimal parts with commas
-        $formattedNumber = number_format($number, 2, '.', ',');
-    
-        return $formattedNumber;
-    }
-
     public function indianMoneyFormat($number){    	
         $decimal = (string)($number - floor($number));
         $money = floor($number);

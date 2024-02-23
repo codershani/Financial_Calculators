@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Calculate</button>
+    <button type="submit" class="btn btn-primary">Plan My Wealth</button>
 </form>
 
 <hr>
